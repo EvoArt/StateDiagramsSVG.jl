@@ -1,0 +1,29 @@
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\begin{document}
+\begingroup
+\definecolor{sd1}{HTML}{EEF7F9}
+\definecolor{sd2}{HTML}{2879A0}
+\definecolor{sd3}{HTML}{172630}
+\definecolor{sd4}{HTML}{F1F7F3}
+\definecolor{sd5}{HTML}{427E68}
+\definecolor{sd6}{HTML}{F7F3ED}
+\definecolor{sd7}{HTML}{A76A32}
+\begin{tikzpicture}[x=1pt,y=-1pt,scale=1.0,transform shape]
+\path[fill=white,draw=none] (0,0) rectangle (620.0,200.0);
+\path[fill=sd1, draw=sd2, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (30.0,45.0) rectangle (170.0,155.0);
+\node[anchor=base west, inner sep=0pt, text=sd2, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (53.0,97.68) {D};
+\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (53.0,134.56) {Draft};
+\path[fill=sd4, draw=sd5, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (240.0,45.0) rectangle (380.0,155.0);
+\node[anchor=base west, inner sep=0pt, text=sd5, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (263.0,97.68) {R};
+\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (263.0,134.56) {Review};
+\path[fill=sd6, draw=sd7, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (450.0,45.0) rectangle (590.0,155.0);
+\node[anchor=base west, inner sep=0pt, text=sd7, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (473.0,97.68) {P};
+\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (473.0,134.56) {Published};
+\path[draw=sd2, line width=5.0pt, line cap=round, line join=round] (180.0,100.0) -- (221.55,100.0);
+\path[fill=sd2, draw=sd2, line width=1.0pt, line cap=round, line join=round] (230.0,100.0) -- (217.0,105.59) -- (217.0,94.41) -- cycle;
+\path[draw=sd5, line width=5.0pt, line cap=round, line join=round] (390.0,100.0) -- (431.55,100.0);
+\path[fill=sd5, draw=sd5, line width=1.0pt, line cap=round, line join=round] (440.0,100.0) -- (427.0,105.59) -- (427.0,94.41) -- cycle;
+\end{tikzpicture}
+\endgroup
+\end{document}
