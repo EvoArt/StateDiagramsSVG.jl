@@ -1,0 +1,7 @@
+name = "StateDiagramsSVG"
+uuid = "994c4c7f-7b1f-47e1-84df-e8087d3a27ac"
+authors = ["Arthur R. Newbury"]
+version = "0.1.0"
+
+[compat]
+julia = "1.10"
