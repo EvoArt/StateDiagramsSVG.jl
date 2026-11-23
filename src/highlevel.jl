@@ -122,11 +122,15 @@ function _render_state_model(states, edges, sections, entry, note, title, subtit
         xs = sort([positions[e.from][1] for e in sinkedges])
         target = positions[sinkid][1]
         ybus = 347.0
-        for x in xs
+        radius = 9.0
+        start = first(xs)
+        path!(d, "M$start 292 V$(ybus-radius) Q$start $ybus $(start+radius) $ybus " *
+                 "H$(target-radius) Q$target $ybus $target $(ybus-radius) V310";
+              stroke="#ad652e", width=3.8)
+        for x in xs[2:end]
             line!(d, x, 292, x, ybus; stroke="#ad652e", width=3.8)
             circle!(d, x, ybus, 4.0; fill="#ad652e")
         end
-        path!(d, "M$(first(xs)) $ybus H$target V312"; stroke="#ad652e", width=3.8)
         arrow!(d, target, 313, target, 299; color="#ad652e", width=3.8, head=8)
         names = unique(e.event for e in sinkedges)
         probs = unique(e.probability for e in sinkedges)
