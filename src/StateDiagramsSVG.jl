@@ -2,6 +2,7 @@ module StateDiagramsSVG
 
 export Diagram, rect!, circle!, path!, line!, text!, arrow!, state_card!
 export svg, save_svg, tikz, save_tikz, cetz, save_cetz, makiefigure, makieplot!
+export state_diagram
 
 abstract type Primitive end
 struct RectPrim <: Primitive
@@ -19,6 +20,7 @@ end
 struct TextPrim <: Primitive
     x::Float64; y::Float64; content::String; size::Float64
     color::String; bold::Bool; anchor::Symbol; family::String
+    latex::Union{Nothing,String}
 end
 
 "A small, dependency free canvas for publication diagrams in SVG. Coordinates start at the top left."
@@ -71,8 +73,8 @@ line!(d::Diagram, x1, y1, x2, y2; kwargs...) =
 
 "Draw centred-height text; `anchor` is `:start`, `:middle` or `:end`."
 function text!(d::Diagram, x, y, content; size = 20, color = "#172630", bold = false,
-               anchor = :start, family = "Arial, Helvetica, sans-serif")
-    push!(d.primitives, TextPrim(x, y, content, size, color, bold, anchor, family))
+               anchor = :start, family = "Arial, Helvetica, sans-serif", latex = nothing)
+    push!(d.primitives, TextPrim(x, y, content, size, color, bold, anchor, family, latex))
     alignment = anchor === :middle ? "middle" : anchor === :end ? "end" : "start"
     add!(d, "<text$(attr("x", x))$(attr("y", y))$(attr("font-size", size))" *
             "$(attr("fill", color))$(attr("font-weight", bold ? 700 : 400))" *
@@ -135,5 +137,6 @@ function makieplot! end
 include("geometry.jl")
 include("tikz.jl")
 include("cetz.jl")
+include("highlevel.jl")
 
 end

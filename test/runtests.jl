@@ -5,7 +5,7 @@ import CairoMakie
 @testset "README example" begin
     source = read(joinpath(@__DIR__, "..", "README.md"), String)
     blocks = [m.captures[1] for m in eachmatch(r"```julia\s*\n(.*?)```"s, source)]
-    examples = filter(block -> occursin("d = Diagram", block), blocks)
+    examples = filter(block -> occursin("d = state_diagram", block), blocks)
     @test length(examples) == 1
     mktempdir() do folder
         cd(folder) do
@@ -19,6 +19,23 @@ import CairoMakie
             @test occursin("cetz.canvas", read("workflow.typ", String))
         end
     end
+end
+
+@testset "model language" begin
+    d = state_diagram(raw"""
+        state A: Active
+        state B: Paused
+        state C: Complete
+        A -> B: wait | p_AB ~ $p_{AB}$
+        A, B -> C: finish | 1-p ~ $1-p$
+        section RATE [wide]: mean rate | per interval
+        """; title="Example")
+    @test occursin("Active", svg(d))
+    @test occursin("finish from any live state", svg(d))
+    @test occursin(raw"$p_{AB}$", tikz(d))
+    @test !occursin(raw"$p_{AB}$", svg(d))
+    @test occursin("cetz.canvas", cetz(d; standalone=true))
+    @test_throws ArgumentError state_diagram("state A: Active\nA -> X: stop | p")
 end
 
 @testset "Makie extension" begin

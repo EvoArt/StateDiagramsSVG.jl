@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="620" height="200" viewBox="0 0 620 200" role="img" aria-labelledby="diagram-title diagram-description">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="390" viewBox="0 0 900 390" role="img" aria-labelledby="diagram-title diagram-description">
 <title id="diagram-title">Document workflow</title>
-<desc id="diagram-description">A draft moves to review and then publication</desc>
+<desc id="diagram-description">State transition diagram: D to R by submit; R to P by approve</desc>
 <rect width="100%" height="100%" fill="white"/>
-<rect x="30" y="45" width="140" height="110" rx="15" fill="#eef7f9" stroke="#2879a0" stroke-width="2.8" />
-<text x="53" y="84" font-size="38" fill="#2879a0" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">D</text>
-<text x="53" y="127" font-size="21" fill="#172630" font-weight="400" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">Draft</text>
-<rect x="240" y="45" width="140" height="110" rx="15" fill="#f1f7f3" stroke="#427e68" stroke-width="2.8" />
-<text x="263" y="84" font-size="38" fill="#427e68" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">R</text>
-<text x="263" y="127" font-size="21" fill="#172630" font-weight="400" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">Review</text>
-<rect x="450" y="45" width="140" height="110" rx="15" fill="#f7f3ed" stroke="#a76a32" stroke-width="2.8" />
-<text x="473" y="84" font-size="38" fill="#a76a32" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">P</text>
-<text x="473" y="127" font-size="21" fill="#172630" font-weight="400" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">Published</text>
-<path d="M180 100 L221.55 100.0" stroke="#2879a0" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M230 100 L217.0 105.59 L217.0 94.41 Z" stroke="#2879a0" stroke-width="1" fill="#2879a0" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M390 100 L431.55 100.0" stroke="#427e68" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M440 100 L427.0 105.59 L427.0 94.41 Z" stroke="#427e68" stroke-width="1" fill="#427e68" stroke-linecap="round" stroke-linejoin="round" />
+<text x="70" y="43" font-size="28" fill="#172630" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">DOCUMENT WORKFLOW</text>
+<path d="M70 76 L830 76" stroke="#d5dee1" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+<text x="70" y="153" font-size="16" fill="#53636c" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">LATENT STATE</text>
+<rect x="70.0" y="180" width="200" height="112" rx="15" fill="#eef7f9" stroke="#2879a0" stroke-width="2.8" />
+<text x="93.0" y="219" font-size="38" fill="#2879a0" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">D</text>
+<text x="93.0" y="262" font-size="21" fill="#172630" font-weight="400" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">Draft</text>
+<rect x="350.0" y="180" width="200" height="112" rx="15" fill="#f1f7f3" stroke="#427e68" stroke-width="2.8" />
+<text x="373.0" y="219" font-size="38" fill="#427e68" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">R</text>
+<text x="373.0" y="262" font-size="21" fill="#172630" font-weight="400" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">Review</text>
+<rect x="630.0" y="180" width="200" height="112" rx="15" fill="#edf3fa" stroke="#356caa" stroke-width="2.8" />
+<text x="653.0" y="219" font-size="38" fill="#356caa" font-weight="700" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">P</text>
+<text x="653.0" y="262" font-size="21" fill="#172630" font-weight="400" text-anchor="start" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">Published</text>
+<path d="M278.0 236.0 L333.55 236.0" stroke="#2879a0" stroke-width="5.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M342.0 236.0 L329.0 241.59 L329.0 230.41 Z" stroke="#2879a0" stroke-width="1" fill="#2879a0" stroke-linecap="round" stroke-linejoin="round" />
+<text x="310.0" y="205" font-size="17" fill="#172630" font-weight="700" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">submit</text>
+<text x="310.0" y="269" font-size="17" fill="#53636c" font-weight="400" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">p_submit</text>
+<path d="M558.0 236.0 L613.55 236.0" stroke="#427e68" stroke-width="5.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M622.0 236.0 L609.0 241.59 L609.0 230.41 Z" stroke="#427e68" stroke-width="1" fill="#427e68" stroke-linecap="round" stroke-linejoin="round" />
+<text x="590.0" y="205" font-size="17" fill="#172630" font-weight="700" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">approve</text>
+<text x="590.0" y="269" font-size="17" fill="#53636c" font-weight="400" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" dominant-baseline="middle">p_accept</text>
 </svg>

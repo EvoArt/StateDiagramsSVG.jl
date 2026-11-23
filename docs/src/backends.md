@@ -21,6 +21,15 @@ nothing
 The `.tex` file is a complete LaTeX document when `standalone=true`; compile
 it with XeLaTeX or LuaLaTeX if labels contain Unicode. Without `standalone`,
 `tikz(d)` returns a `tikzpicture` to include in a document that loads TikZ.
+In `state_diagram`, put a TeX alternative after ` ~ ` in any label. TikZ uses
+that alternative verbatim, while SVG, CeTZ, and Makie use the plain label.
+Only use trusted TeX input. To make a browser-compatible SVG with the same TeX
+typesetting, compile the standalone source to PDF, then convert it to SVG:
+
+```sh
+xelatex workflow.tex
+pdftocairo -svg workflow.pdf workflow.svg
+```
 
 The `.typ` file imports CeTZ 0.4.2 from Typst Universe. Without `standalone`,
 `cetz(d)` returns an includable Typst fragment. The `version` keyword selects

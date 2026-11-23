@@ -1,7 +1,7 @@
 # Keep the displayed SVG synchronized with the runnable README example.
 source = read(joinpath(@__DIR__, "..", "README.md"), String)
 blocks = [m.captures[1] for m in eachmatch(r"```julia\s*\n(.*?)```"s, source)]
-example = only(filter(block -> occursin("d = Diagram", block), blocks))
+example = only(filter(block -> occursin("d = state_diagram", block), blocks))
 mktempdir() do folder
     cd(folder) do
         Base.include_string(Main, example, "README.md example")

@@ -77,7 +77,7 @@ function _tikz_primitive(io, p::TextPrim, names)
            (p.bold ? "\\bfseries" : "")
     color = names[_hex(p.color)]
     println(io, "\\node[anchor=$anchor, inner sep=0pt, text=$color, font=$font] at " *
-                "$(_tkxy(p.x, p.y + 0.36p.size)) {$(_texescape(p.content))};")
+                "$(_tkxy(p.x, p.y + 0.36p.size)) {$(isnothing(p.latex) ? _texescape(p.content) : p.latex)};")
 end
 
 """
