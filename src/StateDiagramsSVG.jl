@@ -1,48 +1,78 @@
 module StateDiagramsSVG
 
-export Diagram, rect!, circle!, path!, line!, text!, arrow!, state_card!, save_svg
+export Diagram, rect!, circle!, path!, line!, text!, arrow!, state_card!
+export svg, save_svg, tikz, save_tikz, cetz, save_cetz, makiefigure, makieplot!
+
+abstract type Primitive end
+struct RectPrim <: Primitive
+    x::Float64; y::Float64; w::Float64; h::Float64; radius::Float64
+    fill::String; stroke::String; width::Float64
+end
+struct CirclePrim <: Primitive
+    x::Float64; y::Float64; r::Float64
+    fill::String; stroke::String; width::Float64
+end
+struct PathPrim <: Primitive
+    commands::String; stroke::String; width::Float64; fill::String
+    dash::Union{Nothing,String}
+end
+struct TextPrim <: Primitive
+    x::Float64; y::Float64; content::String; size::Float64
+    color::String; bold::Bool; anchor::Symbol; family::String
+end
 
 "A small, dependency free canvas for publication diagrams in SVG. Coordinates start at the top left."
 struct Diagram
     width::Int
     height::Int
     elements::Vector{String}
+    primitives::Vector{Primitive}
     title::String
     description::String
 end
 
+"Create a top-left-origin canvas of `width` × `height` drawing units."
 Diagram(width::Integer, height::Integer; title = "", description = "") =
-    Diagram(Int(width), Int(height), String[], title, description)
+    Diagram(Int(width), Int(height), String[], Primitive[], title, description)
 
 escape_xml(s) = replace(string(s), '&' => "&amp;", '<' => "&lt;", '>' => "&gt;",
                         '"' => "&quot;", '\'' => "&apos;")
 attr(name, value) = " $name=\"$(escape_xml(value))\""
 add!(d::Diagram, element) = (push!(d.elements, element); d)
 
+"Draw a rectangle, optionally with rounded corners."
 function rect!(d::Diagram, x, y, w, h; radius = 0, fill = "white", stroke = "none", width = 1)
+    push!(d.primitives, RectPrim(x, y, w, h, radius, fill, stroke, width))
     add!(d, "<rect$(attr("x", x))$(attr("y", y))$(attr("width", w))$(attr("height", h))" *
             "$(attr("rx", radius))$(attr("fill", fill))$(attr("stroke", stroke))" *
             "$(attr("stroke-width", width)) />")
 end
 
+"Draw a circle with radius `r`."
 function circle!(d::Diagram, x, y, r; fill = "white", stroke = "none", width = 1)
+    push!(d.primitives, CirclePrim(x, y, r, fill, stroke, width))
     add!(d, "<circle$(attr("cx", x))$(attr("cy", y))$(attr("r", r))" *
             "$(attr("fill", fill))$(attr("stroke", stroke))$(attr("stroke-width", width)) />")
 end
 
+"Draw a path using absolute SVG `M`, `L`, `H`, `V`, `Q`, `C` and `Z` commands."
 function path!(d::Diagram, commands; stroke = "#172630", width = 2, fill = "none",
                dash = nothing)
+    push!(d.primitives, PathPrim(commands, stroke, width, fill, dash))
     extra = isnothing(dash) ? "" : attr("stroke-dasharray", dash)
     add!(d, "<path$(attr("d", commands))$(attr("stroke", stroke))" *
             "$(attr("stroke-width", width))$(attr("fill", fill))$extra " *
             "stroke-linecap=\"round\" stroke-linejoin=\"round\" />")
 end
 
+"Draw a straight line between two points."
 line!(d::Diagram, x1, y1, x2, y2; kwargs...) =
     path!(d, "M$x1 $y1 L$x2 $y2"; kwargs...)
 
+"Draw centred-height text; `anchor` is `:start`, `:middle` or `:end`."
 function text!(d::Diagram, x, y, content; size = 20, color = "#172630", bold = false,
                anchor = :start, family = "Arial, Helvetica, sans-serif")
+    push!(d.primitives, TextPrim(x, y, content, size, color, bold, anchor, family))
     alignment = anchor === :middle ? "middle" : anchor === :end ? "end" : "start"
     add!(d, "<text$(attr("x", x))$(attr("y", y))$(attr("font-size", size))" *
             "$(attr("fill", color))$(attr("font-weight", bold ? 700 : 400))" *
@@ -73,9 +103,9 @@ function state_card!(d::Diagram, x, y, w, h, code, name; fill, accent,
     text!(d, x + 23, y + 82, name; size = 21, color = ink)
 end
 
-function save_svg(filename, d::Diagram)
-    mkpath(dirname(filename))
-    open(filename, "w") do io
+"Return a complete SVG document as a string."
+function svg(d::Diagram)
+    io = IOBuffer()
         println(io, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         println(io, "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"$(d.width)\" " *
                     "height=\"$(d.height)\" viewBox=\"0 0 $(d.width) $(d.height)\" " *
@@ -85,8 +115,25 @@ function save_svg(filename, d::Diagram)
         println(io, "<rect width=\"100%\" height=\"100%\" fill=\"white\"/>")
         foreach(element -> println(io, element), d.elements)
         println(io, "</svg>")
-    end
+    String(take!(io))
+end
+
+Base.show(io::IO, ::MIME"image/svg+xml", d::Diagram) = print(io, svg(d))
+
+"Write an SVG document to `filename`."
+function save_svg(filename, d::Diagram)
+    mkpath(dirname(filename))
+    write(filename, svg(d))
     filename
 end
+
+"Convert a diagram to a Makie `(figure, axis)` pair after loading a Makie backend."
+function makiefigure end
+"Draw a diagram into an existing Makie axis after loading a Makie backend."
+function makieplot! end
+
+include("geometry.jl")
+include("tikz.jl")
+include("cetz.jl")
 
 end
