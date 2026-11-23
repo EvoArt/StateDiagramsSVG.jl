@@ -1,0 +1,22 @@
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\begin{document}
+\begingroup
+\definecolor{sd1}{HTML}{EEF7F9}
+\definecolor{sd2}{HTML}{2879A0}
+\definecolor{sd3}{HTML}{172630}
+\definecolor{sd4}{HTML}{F1F7F3}
+\definecolor{sd5}{HTML}{427E68}
+\begin{tikzpicture}[x=1pt,y=-1pt,scale=1.0,transform shape]
+\path[fill=white,draw=none] (0,0) rectangle (340.0,110.0);
+\path[fill=sd1, draw=sd2, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (10.0,5.0) rectangle (150.0,105.0);
+\node[anchor=base west, inner sep=0pt, text=sd2, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (33.0,57.68) {A};
+\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (33.0,94.56) {Waiting};
+\path[fill=sd4, draw=sd5, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (190.0,5.0) rectangle (330.0,105.0);
+\node[anchor=base west, inner sep=0pt, text=sd5, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (213.0,57.68) {B};
+\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (213.0,94.56) {Ready};
+\path[draw=sd2, line width=4.5pt, line cap=round, line join=round] (160.0,55.0) -- (171.55,55.0);
+\path[fill=sd2, draw=sd2, line width=1.0pt, line cap=round, line join=round] (180.0,55.0) -- (167.0,60.59) -- (167.0,49.41) -- cycle;
+\end{tikzpicture}
+\endgroup
+\end{document}
