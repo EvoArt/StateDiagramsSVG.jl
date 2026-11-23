@@ -2,28 +2,37 @@
 \usepackage{fontspec}
 \begin{document}
 \begingroup
-\definecolor{sd1}{HTML}{EEF7F9}
-\definecolor{sd2}{HTML}{2879A0}
-\definecolor{sd3}{HTML}{172630}
-\definecolor{sd4}{HTML}{F1F7F3}
-\definecolor{sd5}{HTML}{427E68}
-\definecolor{sd6}{HTML}{F7F3ED}
-\definecolor{sd7}{HTML}{A76A32}
+\definecolor{sd1}{HTML}{172630}
+\definecolor{sd2}{HTML}{D5DEE1}
+\definecolor{sd3}{HTML}{53636C}
+\definecolor{sd4}{HTML}{EEF7F9}
+\definecolor{sd5}{HTML}{2879A0}
+\definecolor{sd6}{HTML}{F1F7F3}
+\definecolor{sd7}{HTML}{427E68}
+\definecolor{sd8}{HTML}{EDF3FA}
+\definecolor{sd9}{HTML}{356CAA}
 \begin{tikzpicture}[x=1pt,y=-1pt,scale=1.0,transform shape]
-\path[fill=white,draw=none] (0,0) rectangle (620.0,200.0);
-\path[fill=sd1, draw=sd2, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (30.0,45.0) rectangle (170.0,155.0);
-\node[anchor=base west, inner sep=0pt, text=sd2, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (53.0,97.68) {D};
-\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (53.0,134.56) {Draft};
-\path[fill=sd4, draw=sd5, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (240.0,45.0) rectangle (380.0,155.0);
-\node[anchor=base west, inner sep=0pt, text=sd5, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (263.0,97.68) {R};
-\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (263.0,134.56) {Review};
-\path[fill=sd6, draw=sd7, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (450.0,45.0) rectangle (590.0,155.0);
-\node[anchor=base west, inner sep=0pt, text=sd7, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (473.0,97.68) {P};
-\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{21.0}{25.2}\selectfont] at (473.0,134.56) {Published};
-\path[draw=sd2, line width=5.0pt, line cap=round, line join=round] (180.0,100.0) -- (221.55,100.0);
-\path[fill=sd2, draw=sd2, line width=1.0pt, line cap=round, line join=round] (230.0,100.0) -- (217.0,105.59) -- (217.0,94.41) -- cycle;
-\path[draw=sd5, line width=5.0pt, line cap=round, line join=round] (390.0,100.0) -- (431.55,100.0);
-\path[fill=sd5, draw=sd5, line width=1.0pt, line cap=round, line join=round] (440.0,100.0) -- (427.0,105.59) -- (427.0,94.41) -- cycle;
+\path[fill=white,draw=none] (0,0) rectangle (900.0,390.0);
+\node[anchor=base west, inner sep=0pt, text=sd1, font=\fontsize{28.0}{33.6}\selectfont\bfseries] at (70.0,53.08) {DOCUMENT WORKFLOW};
+\path[draw=sd2, line width=2.0pt, line cap=round, line join=round] (70.0,76.0) -- (830.0,76.0);
+\node[anchor=base west, inner sep=0pt, text=sd3, font=\fontsize{16.0}{19.2}\selectfont\bfseries] at (70.0,158.76) {LATENT STATE};
+\path[fill=sd4, draw=sd5, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (70.0,180.0) rectangle (270.0,292.0);
+\node[anchor=base west, inner sep=0pt, text=sd5, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (93.0,232.68) {D};
+\node[anchor=base west, inner sep=0pt, text=sd1, font=\fontsize{21.0}{25.2}\selectfont] at (93.0,269.56) {Draft};
+\path[fill=sd6, draw=sd7, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (350.0,180.0) rectangle (550.0,292.0);
+\node[anchor=base west, inner sep=0pt, text=sd7, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (373.0,232.68) {R};
+\node[anchor=base west, inner sep=0pt, text=sd1, font=\fontsize{21.0}{25.2}\selectfont] at (373.0,269.56) {Review};
+\path[fill=sd8, draw=sd9, line width=2.8pt, line cap=round, line join=round, rounded corners=15.0pt] (630.0,180.0) rectangle (830.0,292.0);
+\node[anchor=base west, inner sep=0pt, text=sd9, font=\fontsize{38.0}{45.6}\selectfont\bfseries] at (653.0,232.68) {P};
+\node[anchor=base west, inner sep=0pt, text=sd1, font=\fontsize{21.0}{25.2}\selectfont] at (653.0,269.56) {Published};
+\path[draw=sd5, line width=5.2pt, line cap=round, line join=round] (278.0,236.0) -- (333.55,236.0);
+\path[fill=sd5, draw=sd5, line width=1.0pt, line cap=round, line join=round] (342.0,236.0) -- (329.0,241.59) -- (329.0,230.41) -- cycle;
+\node[anchor=base, inner sep=0pt, text=sd1, font=\fontsize{17.0}{20.4}\selectfont\bfseries] at (310.0,211.12) {submit};
+\node[anchor=base, inner sep=0pt, text=sd3, font=\fontsize{17.0}{20.4}\selectfont] at (310.0,275.12) {$p_{\mathrm{submit}}$};
+\path[draw=sd7, line width=5.2pt, line cap=round, line join=round] (558.0,236.0) -- (613.55,236.0);
+\path[fill=sd7, draw=sd7, line width=1.0pt, line cap=round, line join=round] (622.0,236.0) -- (609.0,241.59) -- (609.0,230.41) -- cycle;
+\node[anchor=base, inner sep=0pt, text=sd1, font=\fontsize{17.0}{20.4}\selectfont\bfseries] at (590.0,211.12) {approve};
+\node[anchor=base, inner sep=0pt, text=sd3, font=\fontsize{17.0}{20.4}\selectfont] at (590.0,275.12) {$p_{\mathrm{accept}}$};
 \end{tikzpicture}
 \endgroup
 \end{document}
