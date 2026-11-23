@@ -26,6 +26,9 @@ The `.typ` file imports CeTZ 0.4.2 from Typst Universe. Without `standalone`,
 `cetz(d)` returns an includable Typst fragment. The `version` keyword selects
 another CeTZ release when needed.
 
+The README example's generated files are available as [SVG](assets/workflow.svg),
+[TikZ](assets/workflow.tex), and [CeTZ](assets/workflow.typ).
+
 ## Makie
 
 Makie is an optional dependency. Loading any Makie backend activates the

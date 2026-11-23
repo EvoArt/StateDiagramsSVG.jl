@@ -5,8 +5,10 @@ example = only(filter(block -> occursin("d = Diagram", block), blocks))
 mktempdir() do folder
     cd(folder) do
         Base.include_string(Main, example, "README.md example")
-        destination = joinpath(@__DIR__, "src", "assets", "workflow.svg")
-        mkpath(dirname(destination))
-        cp("workflow.svg", destination; force = true)
+        assets = joinpath(@__DIR__, "src", "assets")
+        mkpath(assets)
+        for extension in ("svg", "tex", "typ")
+            cp("workflow.$extension", joinpath(assets, "workflow.$extension"); force = true)
+        end
     end
 end
