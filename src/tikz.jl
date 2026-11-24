@@ -81,10 +81,10 @@ function _tikz_primitive(io, p::TextPrim, names)
 end
 
 """
-    tikz(diagram; standalone=false, scale=1) -> String
+    tikz(d; standalone=false, scale=1) -> String
 
-Render the same diagram as a TikZ picture. Curves are sampled into short line
-segments. Use XeLaTeX or LuaLaTeX for labels containing Unicode characters.
+Render `d` as a TikZ picture. `standalone=true` wraps it in a `standalone`
+document (needs XeLaTeX/LuaLaTeX). Curves are sampled into line segments.
 """
 function tikz(d::Diagram; standalone::Bool = false, scale::Real = 1)
     scale > 0 || throw(ArgumentError("scale must be positive"))
@@ -110,7 +110,11 @@ function tikz(d::Diagram; standalone::Bool = false, scale::Real = 1)
     String(take!(io))
 end
 
-"Write TikZ source to `filename`. Pass `standalone=true` for a full document."
+"""
+    save_tikz(filename, d; standalone=false, scale=1) -> filename
+
+Write [`tikz`](@ref) output to `filename`, creating parent directories.
+"""
 function save_tikz(filename, d::Diagram; kwargs...)
     mkpath(dirname(filename))
     write(filename, tikz(d; kwargs...))

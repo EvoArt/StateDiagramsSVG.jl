@@ -52,10 +52,11 @@ function _cetz_primitive(io, p::TextPrim, scale)
 end
 
 """
-    cetz(diagram; standalone=false, scale=1, version="0.4.2") -> String
+    cetz(d; standalone=false, scale=1, version="0.4.2") -> String
 
-Render a diagram as CeTZ code for Typst. Curves are sampled into short line
-segments. The generated source imports CeTZ from Typst Universe.
+Render `d` as Typst source drawing a CeTZ canvas. `standalone=true` adds a
+page fitted to the canvas; `version` is the imported CeTZ package version.
+Curves are sampled into line segments.
 """
 function cetz(d::Diagram; standalone::Bool = false, scale::Real = 1,
               version::AbstractString = "0.4.2")
@@ -76,7 +77,11 @@ function cetz(d::Diagram; standalone::Bool = false, scale::Real = 1,
     String(take!(io))
 end
 
-"Write CeTZ/Typst source to `filename`. Pass `standalone=true` for a full document."
+"""
+    save_cetz(filename, d; standalone=false, scale=1, version="0.4.2") -> filename
+
+Write [`cetz`](@ref) output to `filename`, creating parent directories.
+"""
 function save_cetz(filename, d::Diagram; kwargs...)
     mkpath(dirname(filename))
     write(filename, cetz(d; kwargs...))

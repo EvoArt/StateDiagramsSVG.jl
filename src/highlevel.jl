@@ -1,14 +1,18 @@
-raw"""
-    state_diagram(source; title="State transition model", subtitle="", width=1200)
+@doc raw"""
+    state_diagram(source; title="State transition model", subtitle="", width=1200) -> Diagram
 
-Lay out a state model from a small line-oriented language. Declare states with
-`state A: Name`, transitions with `A -> B: event | probability`, and a shared
-destination with `A, B -> C: event | probability`. Optional `entry:`, `note:`,
-and `section NAME [wide]: heading | detail | detail` lines add context.
+Lay out a state model written in a line-based language (`#` starts a comment):
 
-A label can have a TeX alternative after ` ~ `, for example
-`s p_SE ~ $s p_{\mathrm{SE}}$`. SVG, CeTZ, and Makie use the first form;
-TikZ uses the TeX form verbatim. Only use trusted TeX input.
+    state A: Name                       # at most five main states, left to right
+    A -> B: event | probability         # must follow declaration order
+    A, B -> C: event | probability      # shared destination, drawn as a bus
+    entry: text
+    note: text
+    section NAME [wide]: line | line | line
+
+Any label may carry a TeX form after ` ~ `, e.g. `s p_SE ~ $s p_{\mathrm{SE}}$`;
+[`tikz`](@ref) uses it verbatim, other backends the plain form. TeX is not
+escaped: use trusted input. Throws `ArgumentError` on invalid input.
 """
 function state_diagram(source::AbstractString; title="State transition model",
                        subtitle="", width::Integer=1200)

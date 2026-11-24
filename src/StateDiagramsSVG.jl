@@ -23,7 +23,14 @@ struct TextPrim <: Primitive
     latex::Union{Nothing,String}
 end
 
-"A small, dependency free canvas for publication diagrams in SVG. Coordinates start at the top left."
+"""
+    Diagram
+
+Canvas of drawing primitives, rendered by [`svg`](@ref), [`tikz`](@ref),
+[`cetz`](@ref) or [`makiefigure`](@ref). Origin top left, y down.
+
+Fields: `width`, `height`, `title`, `description` (SVG accessibility text).
+"""
 struct Diagram
     width::Int
     height::Int
@@ -33,7 +40,11 @@ struct Diagram
     description::String
 end
 
-"Create a top-left-origin canvas of `width` × `height` drawing units."
+"""
+    Diagram(width, height; title="", description="") -> Diagram
+
+Empty canvas of `width` × `height` units.
+"""
 Diagram(width::Integer, height::Integer; title = "", description = "") =
     Diagram(Int(width), Int(height), String[], Primitive[], title, description)
 
@@ -42,7 +53,11 @@ escape_xml(s) = replace(string(s), '&' => "&amp;", '<' => "&lt;", '>' => "&gt;",
 attr(name, value) = " $name=\"$(escape_xml(value))\""
 add!(d::Diagram, element) = (push!(d.elements, element); d)
 
-"Draw a rectangle, optionally with rounded corners."
+"""
+    rect!(d, x, y, w, h; radius=0, fill="white", stroke="none", width=1) -> d
+
+Add a rectangle with top-left corner `(x, y)`. `radius` rounds corners; `width` is stroke width.
+"""
 function rect!(d::Diagram, x, y, w, h; radius = 0, fill = "white", stroke = "none", width = 1)
     push!(d.primitives, RectPrim(x, y, w, h, radius, fill, stroke, width))
     add!(d, "<rect$(attr("x", x))$(attr("y", y))$(attr("width", w))$(attr("height", h))" *
@@ -50,14 +65,23 @@ function rect!(d::Diagram, x, y, w, h; radius = 0, fill = "white", stroke = "non
             "$(attr("stroke-width", width)) />")
 end
 
-"Draw a circle with radius `r`."
+"""
+    circle!(d, x, y, r; fill="white", stroke="none", width=1) -> d
+
+Add a circle centred at `(x, y)`.
+"""
 function circle!(d::Diagram, x, y, r; fill = "white", stroke = "none", width = 1)
     push!(d.primitives, CirclePrim(x, y, r, fill, stroke, width))
     add!(d, "<circle$(attr("cx", x))$(attr("cy", y))$(attr("r", r))" *
             "$(attr("fill", fill))$(attr("stroke", stroke))$(attr("stroke-width", width)) />")
 end
 
-"Draw a path using absolute SVG `M`, `L`, `H`, `V`, `Q`, `C` and `Z` commands."
+"""
+    path!(d, commands; stroke="#172630", width=2, fill="none", dash=nothing) -> d
+
+Add a path from absolute SVG commands (`M L H V Q C Z`), e.g. `"M0 0 L10 10"`.
+`dash` is an SVG dash array `"on off"`.
+"""
 function path!(d::Diagram, commands; stroke = "#172630", width = 2, fill = "none",
                dash = nothing)
     push!(d.primitives, PathPrim(commands, stroke, width, fill, dash))
@@ -67,11 +91,21 @@ function path!(d::Diagram, commands; stroke = "#172630", width = 2, fill = "none
             "stroke-linecap=\"round\" stroke-linejoin=\"round\" />")
 end
 
-"Draw a straight line between two points."
+"""
+    line!(d, x1, y1, x2, y2; kwargs...) -> d
+
+Add a line segment. Keywords as [`path!`](@ref).
+"""
 line!(d::Diagram, x1, y1, x2, y2; kwargs...) =
     path!(d, "M$x1 $y1 L$x2 $y2"; kwargs...)
 
-"Draw centred-height text; `anchor` is `:start`, `:middle` or `:end`."
+"""
+    text!(d, x, y, content; size=20, color="#172630", bold=false, anchor=:start,
+          family="Arial, Helvetica, sans-serif", latex=nothing) -> d
+
+Add text vertically centred on `y`. `anchor` is `:start`, `:middle` or `:end`.
+`latex`, if given, replaces `content` in [`tikz`](@ref) output.
+"""
 function text!(d::Diagram, x, y, content; size = 20, color = "#172630", bold = false,
                anchor = :start, family = "Arial, Helvetica, sans-serif", latex = nothing)
     push!(d.primitives, TextPrim(x, y, content, size, color, bold, anchor, family, latex))
@@ -82,7 +116,12 @@ function text!(d::Diagram, x, y, content; size = 20, color = "#172630", bold = f
             " dominant-baseline=\"middle\">$(escape_xml(content))</text>")
 end
 
-"Draw a centred straight arrow between two points, with a compact filled head."
+"""
+    arrow!(d, x1, y1, x2, y2; color="#2879a0", width=4.5, head=13) -> d
+
+Add a straight arrow from `(x1, y1)` to `(x2, y2)` with a filled head of length `head`.
+Throws `ArgumentError` if the arrow is shorter than `head`.
+"""
 function arrow!(d::Diagram, x1, y1, x2, y2; color = "#2879a0", width = 4.5, head = 13)
     dx, dy = x2 - x1, y2 - y1
     len = hypot(dx, dy)
@@ -97,7 +136,11 @@ function arrow!(d::Diagram, x1, y1, x2, y2; color = "#2879a0", width = 4.5, head
     path!(d, tip; stroke = color, width = 1, fill = color)
 end
 
-"Draw a two-line hidden-state card."
+"""
+    state_card!(d, x, y, w, h, code, name; fill, accent, ink="#172630") -> d
+
+Add a rounded card with top-left `(x, y)` showing `code` (large, `accent`) above `name` (`ink`).
+"""
 function state_card!(d::Diagram, x, y, w, h, code, name; fill, accent,
                      ink = "#172630")
     rect!(d, x, y, w, h; radius = 15, fill, stroke = accent, width = 2.8)
@@ -105,7 +148,11 @@ function state_card!(d::Diagram, x, y, w, h, code, name; fill, accent,
     text!(d, x + 23, y + 82, name; size = 21, color = ink)
 end
 
-"Return a complete SVG document as a string."
+"""
+    svg(d) -> String
+
+Render `d` as a standalone SVG document.
+"""
 function svg(d::Diagram)
     io = IOBuffer()
         println(io, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
@@ -122,16 +169,28 @@ end
 
 Base.show(io::IO, ::MIME"image/svg+xml", d::Diagram) = print(io, svg(d))
 
-"Write an SVG document to `filename`."
+"""
+    save_svg(filename, d) -> filename
+
+Write [`svg(d)`](@ref svg) to `filename`, creating parent directories.
+"""
 function save_svg(filename, d::Diagram)
     mkpath(dirname(filename))
     write(filename, svg(d))
     filename
 end
 
-"Convert a diagram to a Makie `(figure, axis)` pair after loading a Makie backend."
+"""
+    makiefigure(d; scale=1) -> (Figure, Axis)
+
+Render `d` as a new Makie figure sized `scale` × canvas. Requires a loaded Makie backend.
+"""
 function makiefigure end
-"Draw a diagram into an existing Makie axis after loading a Makie backend."
+"""
+    makieplot!(ax, d; linewidthscale=1, fontscale=1) -> ax
+
+Draw `d` into an existing `Makie.Axis` (y negated). Requires a loaded Makie backend.
+"""
 function makieplot! end
 
 include("geometry.jl")
